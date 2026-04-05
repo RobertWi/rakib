@@ -136,10 +136,31 @@ Rakib is the data flow layer. Combine with OS sandboxing and business rules for 
 
 ## Based On
 
-| Source | What We Took | License |
-|--------|-------------|---------|
-| [CaMeL](https://arxiv.org/abs/2503.18813) (Google DeepMind) | Data flow concept, value-level provenance | Apache 2.0 |
-| [Dromedary](https://github.com/microsoft/dromedary) (Microsoft) | AST interpreter, DAG graph, MCP pattern | MIT |
+CaMeL and Dromedary solve the same problem differently. Rakib takes the best from each:
+
+| | CaMeL (Google DeepMind) | Dromedary (Microsoft) | Rakib |
+|---|---|---|---|
+| **Approach** | LLM generates restricted Python, custom interpreter runs it | Same code-then-execute, but with MCP tool loading | Both modes: interpreter OR router-level checking with native tool_use |
+| **Value tracking** | `CaMeLValue` wrapping | `CapabilityValue` + `ProvenanceGraph` DAG | `CapValue` + `ProvenanceDAG` — cleaner, async |
+| **Policy language** | Custom Python protocol | Rego (OPA) — industry standard | Rego (OPA) + JSON config fallback |
+| **Data labels** | Source tracking only | Source tracking + sensitivity labels | Source tracking + safe values from instruction |
+| **Tool ecosystem** | Hardcoded, AgentDojo only | MCP tool loading | Any tools — config-driven, no hardcoding |
+| **LLM support** | Custom | Azure OpenAI only (LangChain) | Any LLM — works with native tool_use |
+| **Portability** | Research artifact | Azure-locked | Zero dependencies, any platform |
+| **OS sandbox** | None | None | Designed to complement (Landlock, etc.) |
+| **Status** | "Not production" | "Not production" | Tested (19 tests), config-driven |
+
+**What came from CaMeL:** the core insight — don't trust the LLM to distinguish instructions from data. Track provenance at the value level and enforce policies at tool boundaries.
+
+**What came from Dromedary:** the cleaner architecture — DAG-based provenance graph, MCP tool compatibility, OPA/Rego for policy (industry standard vs custom code), and data labels as a concept.
+
+**What Rakib adds:** portability (any LLM, any tools, any platform), config-driven policies (JSON file, not hardcoded), router-level checking that works with native tool_use (no code generation required), and designed to layer with OS sandboxing.
+
+References:
+- CaMeL paper: https://arxiv.org/abs/2503.18813
+- CaMeL code: https://github.com/google-research/camel-prompt-injection
+- Dromedary code: https://github.com/microsoft/dromedary
+- Simon Willison's analysis: https://simonwillison.net/2025/Apr/11/camel/
 
 ## License
 
