@@ -68,7 +68,7 @@ results = asyncio.run(executor.execute(code))
 
 ## Policy Configuration
 
-All rules in JSON — zero hardcoded tool names:
+All rules in JSON — zero hardcoded tool names. Use YOUR tool names:
 
 ```json
 {
@@ -80,6 +80,8 @@ All rules in JSON — zero hardcoded tool names:
   }
 }
 ```
+
+The included `policies/data.json` has common examples. Replace with your actual tool names — every agent framework names them differently (LangChain uses `search`, MCP uses `call_tool`, Claude uses `web_search`, etc.).
 
 Set via `RAKIB_POLICY_CONFIG` env var or place at `policies/data.json`.
 
