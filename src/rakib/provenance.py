@@ -182,7 +182,7 @@ class ProvenanceTracker:
         for m in re.finditer(r"""(?:to|project_id|target_branch|branch_name|target_agent)[=:]\s*['"]([^'"]+)['"]""", instruction):
             self.safe_values.add(m.group(1))
         # Common agent names mentioned in instructions
-        for m in re.finditer(r"(?:to|send.*to)\s*[=:]\s*['\"]?([a-zA-Z][w-]+|human-operator)['\"]?", instruction):
+        for m in re.finditer(r"(?:to|send.*to)\s*[=:]\s*['\"]?([a-zA-Z][\w-]+|human-operator)['\"]?", instruction):
             self.safe_values.add(m.group(1))
         # Project IDs
         for m in re.finditer(r"project_id[=:]\s*(\d+)", instruction):
