@@ -2,7 +2,10 @@
 
 **Data flow security for AI agents.** Tracks the provenance of every value through agent tool calls. Prevents untrusted data (web scrapes, external APIs) from controlling agent actions.
 
-Named after the Arabic word for camel jockey (راكب) — Rakib rides both [CaMeL](https://arxiv.org/abs/2503.18813) (Google DeepMind) and [Dromedary](https://github.com/microsoft/dromedary) (Microsoft), taking the best from each.
+Named after the Arabic word for camel jockey (راكب) — Rakib rides both [CaMeL](https://arxiv.org/abs/2503.18813) (Google DeepMind) and [Dromedary](https://github.com/microsoft/dromedary) (Microsoft), taking the best from each. The core idea is theirs. Rakib makes it practical:
+
+- **Works with native tool_use** — CaMeL and Dromedary require the LLM to generate Python code. Rakib works with how LLMs actually operate: native tool calls. No code generation needed.
+- **Config-driven, zero hardcoding** — CaMeL is built for AgentDojo, Dromedary for Azure OpenAI. Rakib: one JSON file, bring your own tool names, any LLM.
 
 ## What It Does
 
