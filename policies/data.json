@@ -1,5 +1,5 @@
 {
-  "_comment": "Example policy config. Replace tool names with YOUR agent's actual tool names.",
+  "_comment": "Example policy — not one-size-fits-all. Create your own based on your agent's tools. Your own LLM can help you generate this config from your tool definitions.",
 
   "untrusted_tools": [
     "web_search",
