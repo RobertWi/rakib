@@ -1,18 +1,43 @@
 {
+  "_comment": "Example policy config. Replace tool names with YOUR agent's actual tool names.",
+
   "untrusted_tools": [
     "web_search",
     "fetch",
+    "http_get",
+    "http_post",
     "call_tool",
-    "find_tool"
+    "find_tool",
+    "search",
+    "browse",
+    "scrape",
+    "read_email",
+    "get_emails",
+    "read_document",
+    "get_file_contents",
+    "query_database",
+    "api_call"
   ],
+
   "sensitive_params": {
-    "send_message": ["to"],
+    "send_message": ["to", "recipient"],
     "send_email": ["to", "cc", "bcc"],
-    "commit_files": ["project_id", "file_path"],
-    "create_branch": ["branch_name", "project_id"],
+    "reply_email": ["to"],
+    "forward_email": ["to"],
+    "commit_files": ["project_id", "file_path", "repository"],
+    "create_branch": ["branch_name", "project_id", "repository"],
     "create_mr": ["target_branch", "project_id"],
-    "delegate_task": ["target_agent"],
-    "share_file": ["recipient"],
-    "create_calendar_event": ["attendees"]
+    "create_pull_request": ["base", "repo"],
+    "delegate_task": ["target_agent", "assignee"],
+    "share_file": ["recipient", "email"],
+    "create_calendar_event": ["attendees"],
+    "execute_command": ["command"],
+    "run_script": ["path", "script"],
+    "deploy": ["environment", "target"],
+    "transfer_funds": ["recipient", "account"],
+    "create_user": ["email", "role"],
+    "update_permissions": ["user", "role"],
+    "publish": ["channel", "destination"],
+    "post_comment": ["issue_id", "pr_id"]
   }
 }
