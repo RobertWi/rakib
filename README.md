@@ -105,6 +105,18 @@ deny contains msg if {
 
 Without OPA, Rakib uses a Python config-driven fallback with identical logic.
 
+## The Hard Problems (Honest Assessment)
+
+Simon Willison [called CaMeL](https://simonwillison.net/2025/Apr/11/camel/) the "first credible prompt injection mitigation" that doesn't just throw more AI at the problem. But he also identified challenges that apply to Rakib:
+
+**Policy burden.** Someone has to define which tools are untrusted and which parameters are sensitive. Willison notes he "still hasn't fully figured out AWS IAM" after two decades — and that's the kind of cognitive load policy management creates. Rakib keeps it simple: one JSON file with two lists (untrusted tools, sensitive params). Not zero effort, but far less than writing IAM policies.
+
+**User fatigue.** If the system constantly asks "allow this action?", people eventually approve everything reflexively. Rakib avoids this by making most decisions automatically — only truly ambiguous cases (value not in safe set, not found in tool results, but turn has untrusted data) would need human review. The default is: if it's clearly safe OR clearly blocked, the human never sees it.
+
+**Content manipulation remains unsolved.** CaMeL, Dromedary, and Rakib all solve the same vector: untrusted data controlling WHERE actions go. None of them solve untrusted data influencing WHAT the agent thinks. A poisoned web page can still bias a report — the data flows to the right place through the right channels, but the content is misleading. Defense: the human reading the output. There is no automated solution to fake news.
+
+**Not a silver bullet.** The paper itself says "prompt injection attacks are not fully solved." Rakib is a layer — not a wall. Combine it with OS sandboxing (restrict what the agent can access) and business rules (restrict what actions are allowed) for defense in depth.
+
 ## Three Security Layers
 
 Rakib is the data flow layer. Combine with OS sandboxing and business rules for defense in depth:
