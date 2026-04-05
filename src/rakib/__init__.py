@@ -12,7 +12,7 @@ from rakib.executor import SecureExecutor, PolicyViolation
 from rakib.provenance import ProvenanceTracker, ProvenanceGraph
 from rakib.policy import PolicyEngine, PolicyConfig, PolicyDecision
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = [
     "SecureExecutor",
     "PolicyViolation",

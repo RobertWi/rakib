@@ -1,6 +1,6 @@
 [project]
 name = "rakib"
-version = "0.1.0"
+version = "0.1.1"
 description = "Data flow security for AI agents — provenance tracking and policy enforcement"
 readme = "README.md"
 license = {text = "Apache-2.0"}
