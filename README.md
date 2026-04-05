@@ -130,7 +130,7 @@ Rakib is the data flow layer. Combine with OS sandboxing and business rules for 
 │ Layer 2: Data Flow (Rakib)               │
 │ Provenance DAG + policy enforcement      │
 ├─────────────────────────────────────────┤
-│ Layer 1: OS Sandbox (Landlock, etc.)     │
+│ Layer 1: OS Sandbox (e.g. nono/Landlock) │
 └─────────────────────────────────────────┘
 ```
 
@@ -154,7 +154,7 @@ CaMeL and Dromedary solve the same problem differently. Rakib takes the best fro
 
 **What came from Dromedary:** the cleaner architecture — DAG-based provenance graph, MCP tool compatibility, OPA/Rego for policy (industry standard vs custom code), and data labels as a concept.
 
-**What Rakib adds:** portability (any LLM, any tools, any platform), config-driven policies (JSON file, not hardcoded), router-level checking that works with native tool_use (no code generation required), and designed to layer with OS sandboxing.
+**What Rakib adds:** portability (any LLM, any tools, any platform), config-driven policies (JSON file, not hardcoded), router-level checking that works with native tool_use (no code generation required). Rakib is the data flow layer — for OS-level sandboxing, consider [nono](https://github.com/always-further/nono) (Landlock/Seatbelt) as a complementary layer.
 
 References:
 - CaMeL paper: https://arxiv.org/abs/2503.18813
