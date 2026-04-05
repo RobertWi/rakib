@@ -1,0 +1,54 @@
+name: Auto-release on dependency update
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  auto-release:
+    if: github.event.pull_request.merged == true && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run tests before release
+        run: |
+          pip install pytest
+          PYTHONPATH=src pytest tests/ -q
+
+      - name: Bump patch version
+        run: |
+          CURRENT=$(grep 'version = ' pyproject.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+          NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          sed -i "s/version = \"$CURRENT\"/version = \"$NEW_VERSION\"/" pyproject.toml
+          sed -i "s/__version__ = \"$CURRENT\"/__version__ = \"$NEW_VERSION\"/" src/rakib/__init__.py
+          echo "VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
+
+      - name: Commit version bump
+        env:
+          VERSION: ${{ env.VERSION }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml src/rakib/__init__.py
+          git commit -m "release: v${VERSION} (dependency update)"
+          git push
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ env.VERSION }}
+        run: |
+          gh release create "v${VERSION}" \
+            --title "Rakib v${VERSION}" \
+            --notes "Patch release — dependency update from Dependabot." \
+            --latest
