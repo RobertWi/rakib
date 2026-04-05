@@ -210,7 +210,7 @@ Default is off — agents that don't read external data don't need it.
 |---|---|---|---|
 | Interpreter | ✓ | ✓ | **✓** |
 | Provenance DAG | ✓ | ✓ | **✓** |
-| Policy enforcement | ✓ custom | ✓ Rego | **✓ inline + OPA** |
+| Policy enforcement | ✓ custom Python | ✓ Rego | **✓ config-driven + OPA** |
 | OS-level sandbox | ✗ | ✗ | **✓ (optional)** |
 | Multi-agent support | ✗ | ✗ | **✓** |
 | Audit trail | ✗ | ✗ | **✓ (pluggable)** |
