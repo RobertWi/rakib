@@ -2,7 +2,7 @@
 
 **Data flow security for AI agents.** Tracks the provenance of every value through agent tool calls. Prevents untrusted data (web scrapes, external APIs) from controlling agent actions.
 
-Named after the Arabic word for camel jockey (راكب) — Rakib rides both [CaMeL](https://arxiv.org/abs/2503.18813) (Google DeepMind) and [Dromedary](https://github.com/microsoft/dromedary) (Microsoft), taking the best from each. The core idea is theirs. Rakib makes it practical:
+Implements the [Code-Then-Execute Pattern](https://simonwillison.net/2025/Jun/13/prompt-injection-design-patterns/#the-code-then-execute-pattern) — what Simon Willison categorizes as the most sophisticated prompt injection defense pattern. Named after the Arabic word for camel jockey (راكب) — Rakib rides both [CaMeL](https://arxiv.org/abs/2503.18813) (Google DeepMind) and [Dromedary](https://github.com/microsoft/dromedary) (Microsoft), taking the best from each. The core idea is theirs. Rakib makes it practical:
 
 - **Works with native tool_use** — CaMeL and Dromedary require the LLM to generate Python code. Rakib works with how LLMs actually operate: native tool calls. No code generation needed.
 - **Config-driven, zero hardcoding** — CaMeL is built for AgentDojo, Dromedary for Azure OpenAI. Rakib: one JSON file, bring your own tool names, any LLM.
@@ -112,7 +112,7 @@ Without OPA, Rakib uses a Python config-driven fallback with identical logic.
 
 ## The Hard Problems (Honest Assessment)
 
-Simon Willison [called CaMeL](https://simonwillison.net/2025/Apr/11/camel/) the "first credible prompt injection mitigation" that doesn't just throw more AI at the problem. But he also identified challenges that apply to Rakib:
+Simon Willison [called CaMeL](https://simonwillison.net/2025/Apr/11/camel/) the "first credible prompt injection mitigation" that doesn't just throw more AI at the problem. In his [prompt injection design patterns taxonomy](https://simonwillison.net/2025/Jun/13/prompt-injection-design-patterns/), he categorizes this as the **Code-Then-Execute Pattern** — one of six design patterns for defending against prompt injection, and the one with the strongest data flow guarantees. But he also identified challenges that apply to Rakib:
 
 **Policy burden.** Someone has to define which tools are untrusted and which parameters are sensitive. Willison notes he "still hasn't fully figured out AWS IAM" after two decades — and that's the kind of cognitive load policy management creates. Rakib keeps it simple: one JSON file with two lists (untrusted tools, sensitive params). Not zero effort, but far less than writing IAM policies.
 
@@ -163,7 +163,8 @@ References:
 - CaMeL paper: https://arxiv.org/abs/2503.18813
 - CaMeL code: https://github.com/google-research/camel-prompt-injection
 - Dromedary code: https://github.com/microsoft/dromedary
-- Simon Willison's analysis: https://simonwillison.net/2025/Apr/11/camel/
+- Simon Willison's CaMeL analysis: https://simonwillison.net/2025/Apr/11/camel/
+- Simon Willison's design patterns taxonomy: https://simonwillison.net/2025/Jun/13/prompt-injection-design-patterns/
 
 ## License
 
