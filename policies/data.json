@@ -3,17 +3,15 @@
     "web_search",
     "fetch",
     "call_tool",
-    "find_tool",
-    "artifact_search",
-    "artifact_query"
+    "find_tool"
   ],
   "sensitive_params": {
     "send_message": ["to"],
+    "send_email": ["to", "cc", "bcc"],
     "commit_files": ["project_id", "file_path"],
     "create_branch": ["branch_name", "project_id"],
     "create_mr": ["target_branch", "project_id"],
     "delegate_task": ["target_agent"],
-    "send_email": ["to", "cc", "bcc"],
     "share_file": ["recipient"],
     "create_calendar_event": ["attendees"]
   }
